@@ -1,3 +1,26 @@
+function DrunkenAntWalk(start_point, number_drinks, length) {
+  let cur_point = start_point;
+  let cur_length = 0;
+  let vel = new createVector(random(-5, 5), random(-5, 5));
+  vel.setMag(1);
+
+  let accl = 0;
+  let angular_accl = random(-1, 1);
+  beginShape();
+
+  while (cur_length < length) {
+    curveVertex(cur_point.x, cur_point.y);
+    let next_point = cur_point.add(vel);
+    cur_length += vel.mag();
+    cur_point = next_point;
+    vel.rotate(angular_accl);
+    vel.setMag(vel.mag() + accl);
+    accl = accl + random(-0.1, 0.1) * number_drinks;
+    angular_accl = angular_accl + random(-1, 1);
+  }
+  endShape();
+}
+
 function drawWobblyLine(start_x, start_y, end_x, end_y) {
   let x_diff = end_x - start_x;
   let x_incr = x_diff / 100;
@@ -80,3 +103,49 @@ function DrawSquiggle(start_x, start_y, radiuus, length) {
   endShape();
 }
 
+let divs = 256;
+
+function VariablyThickLine(start_point, end_point, points) {
+  let x_diff = end_point.x - start_point.x;
+  let y_diff = end_point.y - start_point.y;
+
+  let diff = Math.sqrt(x_diff + y_diff);
+
+  let thevpoints = [start_point];
+
+  for (let i = 0; i < points.length; i++) {
+    let d = (diff / 100) * points[i];
+    let t = d / diff;
+    append(
+      thevpoints,
+      createVector(
+        (1 - t) * start_point.x + t * end_point.x,
+        (1 - t) * start_point.y + t * end_point.y
+      )
+    );
+  }
+  append(thevpoints, end_point);
+
+  let rotr = 180 / divs;
+
+  for (let i = 0; i < thevpoints.length - 1; i++) {
+    let thexdiff = thevpoints[i + 1].x - thevpoints[i].x;
+    let theydiff = thevpoints[i + 1].y - thevpoints[i].y;
+
+    let x_div = thexdiff / divs;
+    let y_div = theydiff / divs;
+    for (let j = 0; j <= divs; j++) {
+      push();
+      translate(thevpoints[i].x + j * x_div, thevpoints[i].y + j * y_div);
+      rotate(j * rotr);
+      line(-50, 0, 50, 0);
+      // line(0, -10, 0, 140);
+      pop();
+    }
+  }
+}
+
+
+function drawCircle(position, diameter) {
+  circle(position.x, position.y, diameter);
+}
