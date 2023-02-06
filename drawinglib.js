@@ -40,16 +40,18 @@ function drawWobblyLine(start_x, start_y, end_x, end_y) {
   }
 }
 
+const num_incs = 100;
+
 function drawHatchedLine(start_x, start_y, end_x, end_y) {
   let x_diff = end_x - start_x;
-  let x_incr = x_diff / 100;
+  let x_incr = x_diff / num_incs;
 
   let y_diff = end_y - start_y;
-  let y_incr = y_diff / 50;
+  let y_incr = y_diff / num_incs;
 
   let cur_x = start_x;
   let cur_y = start_y;
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < num_incs; i++) {
     let next_x = cur_x + x_incr;
     let next_y = cur_y + y_incr;
     strokeWeight(1);
