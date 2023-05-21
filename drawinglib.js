@@ -28,8 +28,8 @@ function drawWobblyLine(start_x, start_y, end_x, end_y) {
   let y_diff = end_y - start_y;
   let y_incr = y_diff / 100;
 
-  let cur_x = start_x + x_diff;
-  let cur_y = start_y + y_incr;
+  let cur_x = start_x;
+  let cur_y = start_y;
   for (let i = 0; i < 100; i++) {
     let next_x = randomGaussian(cur_x + x_incr);
     let next_y = randomGaussian(cur_y + y_incr);
@@ -84,7 +84,7 @@ function LenThroughArray(points) {
   return len;
 }
 
-function DrawSquiggle(start_x, start_y, radiuus, length) {
+function drawSquiggle(start_x, start_y, radiuus, length) {
   let current_length = 0;
   let current_angle = 0;
   let points = [];
